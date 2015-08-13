@@ -7,7 +7,7 @@ class UsersControllerTest < ActionController::TestCase
     @other_user = users(:archer)
   end
 
-test "should redirect destroy when not logged in" do
+  test "should redirect destroy when not logged in" do
     assert_no_difference 'User.count' do
       delete :destroy, id: @user
     end
