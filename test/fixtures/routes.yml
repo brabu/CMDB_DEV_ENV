@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  sid: 1
+  did: 1
+  st: MyString
+  et: MyString
+  fare: 1
+
+two:
+  sid: 1
+  did: 1
+  st: MyString
+  et: MyString
+  fare: 1

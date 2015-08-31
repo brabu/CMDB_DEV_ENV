@@ -1,0 +1,14 @@
+<style>
+
+#table1 th, #table1 td {
+  padding:10px !important;
+}
+</style>
+<center><h1>Booking Details</h1>
+
+<%= @u.name%></td>
+<table>
+<tr><td><img src="/assets/red.png" alt="Flag" width="30px" height="30px"/></td><td><%= @r.source.name %></td><td>--------->--------->---------<img src="/assets/bus.png" alt="bus image" width="100px" height="60px"/>--------->--------->---------</td><td><%= @r.destination.name %></td><td><img src="/assets/green.png" alt="Flag" width="30px" height="30px"/></td></tr>
+<tr><td></td><td><%= @r.st %></td><td align="center"><%= jdate %></td><td><%= @r.et %></td><td></td></tr>
+</table>
+</center>

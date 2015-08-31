@@ -11,16 +11,55 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150813065632) do
+ActiveRecord::Schema.define(version: 20150828113401) do
+
+  create_table "journeys", force: :cascade do |t|
+    t.integer  "routeid"
+    t.string   "date"
+    t.integer  "booked"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "places", force: :cascade do |t|
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "routes", force: :cascade do |t|
+    t.integer  "sid"
+    t.integer  "did"
+    t.string   "st"
+    t.string   "et"
+    t.integer  "fare"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer  "max"
+  end
+
+  create_table "tickets", force: :cascade do |t|
+    t.integer  "journey_id"
+    t.integer  "user_id"
+    t.integer  "route_id"
+    t.string   "DOB"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "users", force: :cascade do |t|
     t.string   "name"
     t.string   "email"
-    t.datetime "created_at",                      null: false
-    t.datetime "updated_at",                      null: false
+    t.datetime "created_at",                        null: false
+    t.datetime "updated_at",                        null: false
     t.string   "password_digest"
     t.string   "remember_digest"
-    t.boolean  "admin",           default: false
+    t.boolean  "admin",             default: false
+    t.string   "activation_digest"
+    t.boolean  "activated",         default: false
+    t.datetime "activated_at"
+    t.string   "reset_digest"
+    t.datetime "reset_sent_at"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true

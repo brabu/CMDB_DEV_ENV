@@ -1,0 +1,61 @@
+<head>
+  <style>
+
+#results_table th, #results_table td {
+  padding:10px !important;
+}
+
+#results_table input {
+  width:"30%" !important;
+}
+
+</style>
+</head>
+
+<center>
+<h1>Search Results found</h1>
+<% if(@route.blank?) then %>
+	<h2> There was some problem in processing the selected route, The route service will be coming soon! </h2>
+   <% else %>
+   <div style="width='80px'">
+
+<table border="1" cellspacing="10" cellpadding="10" id="results_table">
+<%= form_for(@journey, url: {controller:"journey", action: "create"}, format: :csv, html: { method: :post}) do |f| %>
+<tr> 
+  <th>S.No</th>
+  <th>Date</th>
+  <th>Source</th>
+  <th>Destination</th>
+  <th>Start Time</th>
+  <th>End Time</th>
+  <th>Fare</th>
+  <th>Availabiltiy</th>
+  <th>Select Route</th>
+ </tr>
+<% sno=1 %>
+<% @route.each do |r| 
+		booked= r.journeys.find_by_date(jdate).try(:booked) || 0
+%>
+<tr> 
+  <td><%= sno %></td>
+  <td><%= jdate %></td>
+  <td><%= r.source.name %></td>
+  <td><%= r.destination.name %></td>
+  <td><%= r.st %></td>
+  <td><%= r.et %></td>
+  <td><%= r.fare %></td>
+  <td><%=  r.max - booked %></td>
+  <td align="center" ><input type="radio" name="book"  value="<%=r.id%>"/></td>
+  <input type="hidden" name="date" value="<%= jdate %>" /> 
+ </tr>
+ <% sno+=1 %>
+ <% end %>
+ <tr><td align="center" width="100" colspan="9" > <%= f.submit "book", class: "btn btn-primary" %><% end %></td></tr>
+ </table>
+</div>
+<% end %>
+</center>
+
+
+
+    

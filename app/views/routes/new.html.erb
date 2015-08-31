@@ -1,0 +1,39 @@
+<script type="text/javascript">
+        function restrictDate() {
+            var mindate = new Date().toISOString().split('T')[0];
+			document.getElementsByName("date")[0].setAttribute('min', mindate);
+			var maxdate = new Date();
+			maxdate.setDate(maxdate.getDate() + 60);
+			var maxdate = maxdate.toISOString().split('T')[0];
+			document.getElementsByName("date")[0].setAttribute('max', maxdate);
+        }
+        window.onload = restrictDate;
+</script>
+<% if logged_in? %>
+<center><h1>Travels Booking</h1>
+<%= form_for(@route, url: {controller:"routes", action: "create"}, format: :csv, html: { method: :post}) do |f| %>
+<table>
+<tr>
+ <td><label> Source : </label></td>
+ <td><%= collection_select(:place, :sid, Place.all, :id, :name, :prompt => true, :style => "width: 50%") %></td>
+</tr>
+<tr>
+ <td><label> Destination : </label></td>
+ <td><%= collection_select(:place, :did, Place.all, :id, :name, :prompt => true, :style => "width: 50%" ) %></td>
+</tr>
+<tr>
+ <td><label> Journey Date : </label></td>
+ <td><input type="date" name="date" ></td>
+</tr>
+<tr><td rowspan="2"><%= f.submit "find", class: "btn btn-primary" %></td></tr>
+</table>
+<% end %>
+</center>
+
+<% else %>
+   <div class="center jumbotron"\>
+  <h1>Welcome to FreshBus Service</h1>
+  <%= link_to "Sign up now!", 'signup', class: "btn btn-lg btn-primary" %>
+  <%= link_to "Log in", 'login', class: "btn btn-lg btn-primary" %>
+</div>
+<%end %>
