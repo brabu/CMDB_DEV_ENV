@@ -1,0 +1,18 @@
+
+<style>
+
+#table1 th, #table1 td {
+  padding:10px !important;
+}
+</style>
+<center><h3>Passenger Details</h3>
+
+<table id="table1">
+<tr><th>S.No</th><th>Name</th><th>Age</th></tr>
+<% sno=1
+@passenger = Passenger.where(:ticket_id => params["ticketid"]) 
+@passenger.each do |p| %>
+<tr><td><%= sno %></td><td><%= p.name %> </td><td><%= p.age %></td></tr>
+<% end %>
+</table>
+</center>

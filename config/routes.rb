@@ -3,7 +3,12 @@ Rails.application.routes.draw do
 
 
   
-  get    'book_tickets' => 'booked_tickets#display'
+  get 'passengers/new'
+
+  post 'passengers/create'
+
+  get  'book_tickets' => 'booked_tickets#display'
+  get  'ticket_details' => 'booked_tickets#passenger_details'
 
   get 'sessions/new'
 
@@ -15,12 +20,17 @@ Rails.application.routes.draw do
   get    'login'    => 'sessions#new'
   post   'login'    => 'sessions#create'
   delete 'logout'   => 'sessions#destroy'
-  get    'check_availability' => "route#check_availability"
+  get    'show' => "routes#show"
+  post    'save' => "routes#save"
   get    'booked_details' => "journey#booked_details"
+  get    'passenger_details' => "journey#passenger_details"
+  get    'search'    => 'journey#search'
+  
   resources :places
   resources :routes
   resources :users
   resources :journey
+  
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

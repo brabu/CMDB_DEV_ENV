@@ -1,0 +1,16 @@
+<center><h3> Enter the places to Add </h3>
+
+
+
+<%= form_for(@place) do |f| %>
+<label>Place 1</label>
+<input type="text" name="place1" />
+</br>
+
+<label>Place 2</label>
+<input type="text" name="place2" />
+</br>
+ <%= f.submit "Add Places", class: "btn btn-primary" %>
+ <% end %>
+
+</center>

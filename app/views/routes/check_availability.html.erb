@@ -15,44 +15,40 @@
 <center>
 <h1>Search Results found</h1>
 <% if(@route.blank?) then %>
-	<h2> There was some problem in processing the selected route, The route service will be coming soon! </h2>
-   <% else %>
-   <div style="width='80px'">
+  <h2> There was some problem in processing the selected route, The route service will be coming soon! </h2>
+<% else %>
+  <div style="width='100px'">
+  <%= form_for(@journey, url: {controller:"journey", action: "create"}, format: :csv, html: { method: :post}) do |f| %>
+  <h4> Journey Date: <%= jdate %> </h4>
+   <table id="results_table">
+      <tr><td align="center" colspan="2">Source</td><td align="center" >Fare</td><td align="center" colspan="2">Destination</td><td align="center" >Availabilty</td><td align="center" >Ticket Count</td><td align="center">Select</td></tr>
+  <% @route.each do |r| 
+        booked= r.journeys.find_by_date(jdate).try(:booked) || 0
+    %>
+    <% available =  r.max - booked %>
 
-<table border="1" cellspacing="10" cellpadding="10" id="results_table">
-<%= form_for(@journey, url: {controller:"journey", action: "create"}, format: :csv, html: { method: :post}) do |f| %>
-<tr> 
-  <th>S.No</th>
-  <th>Date</th>
-  <th>Source</th>
-  <th>Destination</th>
-  <th>Start Time</th>
-  <th>End Time</th>
-  <th>Fare</th>
-  <th>Availabiltiy</th>
-  <th>Select Route</th>
- </tr>
-<% sno=1 %>
-<% @route.each do |r| 
-		booked= r.journeys.find_by_date(jdate).try(:booked) || 0
-%>
-<tr> 
-  <td><%= sno %></td>
-  <td><%= jdate %></td>
-  <td><%= r.source.name %></td>
-  <td><%= r.destination.name %></td>
-  <td><%= r.st %></td>
-  <td><%= r.et %></td>
-  <td><%= r.fare %></td>
-  <td><%=  r.max - booked %></td>
-  <td align="center" ><input type="radio" name="book"  value="<%=r.id%>"/></td>
-  <input type="hidden" name="date" value="<%= jdate %>" /> 
- </tr>
- <% sno+=1 %>
- <% end %>
- <tr><td align="center" width="100" colspan="9" > <%= f.submit "book", class: "btn btn-primary" %><% end %></td></tr>
- </table>
-</div>
+      <tr><td><img src="/assets/red.png" alt="Flag" width="30px" height="30px"/></td><td><%= r.source.name %></td><td>--------->--------->---------<img src="/assets/bus.png" alt="bus image" width="100px" height="60px"/>--------->--------->---------</td><td><%= r.destination.name %></td><td><img src="/assets/green.png" alt="Flag" width="30px" height="30px"/></td>
+      <td rowspan="2" align="center" ><%= available  %></td>
+      <% if(available > 0) then 
+          if(available > 5) then %>
+            <td rowspan="2" align="center" ><INPUT name="count<%=r.id%>" TYPE="NUMBER" MIN="1" MAX="5" STEP="1" VALUE="1" /></td>
+          <% else %>
+            <td rowspan="2" align="center" ><INPUT name="count<%=r.id%>" TYPE="NUMBER" MIN="1" MAX="<%= available %>" STEP="1" VALUE="1" /></td>
+          <% end %>
+        
+          <td rowspan="2" align="center" ><input type="radio" name="book"  value="<%=r.id%>" checked="checked"/></td>
+      <% else %>
+          <td rowspan="2" align="center" ></td><td rowspan="2"></td></tr>
+      <% end %>
+      </tr>
+      <tr><td></td><td><%= r.st %></td><td align="center"><%= r.fare %></td><td><%= r.et %></td><td></td>
+    <% end %>
+      
+      <tr><td align="center" colspan="8" > <%= f.submit "Next", class: "btn btn-primary" %></td></tr>
+    </table>
+    <input type="hidden" name="date" value="<%= jdate %>" /> 
+  <% end %>  
+  </div>
 <% end %>
 </center>
 
