@@ -27,7 +27,7 @@
     %>
     <% available =  r.max - booked %>
 
-      <tr><td><img src="/assets/red.png" alt="Flag" width="30px" height="30px"/></td><td><%= r.source.name %></td><td>--------->--------->---------<img src="/assets/bus.png" alt="bus image" width="100px" height="60px"/>--------->--------->---------</td><td><%= r.destination.name %></td><td><img src="/assets/green.png" alt="Flag" width="30px" height="30px"/></td>
+      <tr><td><img src="http://www.iconhot.com/icon/png/rrze/720/flag-red-3.png" alt="Flag" width="30px" height="30px"/></td><td><%= r.source.name %></td><td>--------->--------->---------<img src="http://media-cache-ak0.pinimg.com/736x/f2/e4/0a/f2e40a6d211201931ef8004bde693993.jpg" alt="bus image" width="100px" height="60px"/>--------->--------->---------</td><td><%= r.destination.name %></td><td><img src="http://findicons.com/files/icons/977/rrze/720/flag_green.png" alt="Flag" width="30px" height="30px"/></td>
       <td rowspan="2" align="center" ><%= available  %></td>
       <% if(available > 0) then 
           if(available > 5) then %>

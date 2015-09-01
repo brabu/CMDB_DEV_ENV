@@ -21,7 +21,7 @@ Rails.application.routes.draw do
   post   'login'    => 'sessions#create'
   delete 'logout'   => 'sessions#destroy'
   get    'show' => "routes#show"
-  post    'save' => "routes#save"
+  post   'save' => "routes#save"
   get    'booked_details' => "journey#booked_details"
   get    'passenger_details' => "journey#passenger_details"
   get    'search'    => 'journey#search'
