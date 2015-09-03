@@ -16,8 +16,6 @@
 <% @t.each do |t| %>
 <tr><td><%= sno %></td>
 	<td><a href="ticket_details?ticketid=<%= t.id %>" target="_blank" >FBS#<%= t.id %></a></td>
-
-    <td>FBS#<%= t.id %></td>
 	<td><%= t.DOB %></td><td><%= t.journey.date %></td><td><%= t.route.source.name %></td><td><%= t.route.destination.name %></td><td><%= t.route.st %></td><td><%= t.route.et %></td><td><%= t.count %></td><td><%= t.fare %></td></tr>
 
 <% sno+=1 %>
