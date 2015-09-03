@@ -25,6 +25,7 @@ Rails.application.routes.draw do
   get    'booked_details' => "journey#booked_details"
   get    'passenger_details' => "journey#passenger_details"
   get    'search'    => 'journey#search'
+  post   'delete'    => 'booked_tickets#destroy'
   
   resources :places
   resources :routes

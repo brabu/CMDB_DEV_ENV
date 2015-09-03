@@ -4,7 +4,7 @@ class RoutesController < ApplicationController
   end
   
   def create
-  	@route = Route.where(:sid => params[:place][:sid], :did => params[:place][:did]) || []
+  	@route = Route.includes([:source],[:destination]).where(:sid => params[:place][:sid], :did => params[:place][:did]) || []
   	@journey = Journey.new
   	render 'check_availability', :locals => { :jdate => params["date"]}
   end

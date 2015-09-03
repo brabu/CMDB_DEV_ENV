@@ -21,7 +21,7 @@ class PassengersController < ApplicationController
     index = 1 
     while(index <= params["count"].to_f)
     	a= index
-    	Passenger.create(:name => params["name"+a.to_s], :age => params["age"+a.to_s], :ticket_id => @t.id )
+    	Passenger.create(:name => params["name"+a.to_s], :age => params["age"+a.to_s], :ticket_id => @t.id, :status => true)
     	index+=1
     end
     render 'booked_details', :locals => { :jdate => params["date"], }
