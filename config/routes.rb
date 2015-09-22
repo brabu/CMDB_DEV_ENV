@@ -1,36 +1,26 @@
 Rails.application.routes.draw do
 
 
-
-  
-  get 'passengers/new'
-
-  post 'passengers/create'
-
-  get  'book_tickets' => 'booked_tickets#display'
   get  'ticket_details' => 'booked_tickets#passenger_details'
 
   get 'sessions/new'
 
-  root                 'routes#new'
-  get    'help'     => 'static_pages#help'
-  get    'about'    => 'static_pages#about'
+  root                 'routes#show'
   get    'contact'  => 'static_pages#contact'     
   get    'signup'   => 'users#new'
   get    'login'    => 'sessions#new'
   post   'login'    => 'sessions#create'
   delete 'logout'   => 'sessions#destroy'
-  get    'show' => "routes#show"
-  post   'save' => "routes#save"
-  get    'booked_details' => "journey#booked_details"
-  get    'passenger_details' => "journey#passenger_details"
-  get    'search'    => 'journey#search'
-  post   'delete'    => 'booked_tickets#destroy'
+  post   'search'   => "routes#search"
+  post   'delete'   => 'booked_tickets#destroy'
+  get    'index'    => 'booked_tickets#index'
+  get    'show'     => 'booked_tickets#show'
   
   resources :places
   resources :routes
   resources :users
   resources :journey
+  resources :passengers
   
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

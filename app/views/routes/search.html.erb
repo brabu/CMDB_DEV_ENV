@@ -18,7 +18,7 @@
   <h2> There was some problem in processing the selected route, The route service will be coming soon! </h2>
 <% else %>
   <div style="width='100px'">
-  <%= form_for(@journey, url: {controller:"journey", action: "create"}, format: :csv, html: { method: :post}) do |f| %>
+  <%= form_for(@journey, url: {controller:"passengers", action: "new"}, format: :csv, html: { method: :get}) do |f| %>
   <h4> Journey Date: <%= jdate %> </h4>
    <table id="results_table">
       <tr><td align="center" colspan="2">Source</td><td align="center" >Fare</td><td align="center" colspan="2">Destination</td><td align="center" >Availabilty</td><td align="center" >Ticket Count</td><td align="center">Select</td></tr>

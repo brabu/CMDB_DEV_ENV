@@ -3,13 +3,13 @@ class RoutesController < ApplicationController
   	@route = Route.new
   end
   
-  def create
-  	@route = Route.includes([:source],[:destination]).where(:sid => params[:place][:sid], :did => params[:place][:did]) || []
+  def search
+  	@route = Route.includes([:source],[:destination]).where(:sid => params[:place][:sid], :did => params[:place][:did])
   	@journey = Journey.new
-  	render 'check_availability', :locals => { :jdate => params["date"]}
+  	render 'search', :locals => { :jdate => params[:date]}
   end
 
-  def save
+  def create
     @route = Route.new
     sth = params["st-h"].to_s
     if sth.length < 2
@@ -29,14 +29,11 @@ class RoutesController < ApplicationController
     end
     st = sth + ":" + stm + ":00"
     et = eth + ":" + etm + ":00"
-    r = Route.create(:sid => params[:place][:sid], :did => params[:place][:did] ,:st => st ,:et => et ,:fare => params["fare"] ,:max => params["max"]) || []
-    render 'save'
+    r = Route.create(:sid => params[:place][:sid], :did => params[:place][:did] ,:st => st ,:et => et ,:fare => params[:fare] ,:max => params[:max])
+    redirect_to 'success'
   end
 
   def show
-     @route = Route.new
-  end
-
-  def check_availability
+    @route = Route.new
   end
 end

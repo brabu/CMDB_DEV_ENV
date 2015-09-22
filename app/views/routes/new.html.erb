@@ -1,54 +1,54 @@
+<head>
 <script type="text/javascript">
-     var global_name="";
-        function restrictDate() {
-            var mindate = new Date().toISOString().split('T')[0];
-			document.getElementsByName("date")[0].setAttribute('min', mindate);
-			var maxdate = new Date();
-			maxdate.setDate(maxdate.getDate() + 60);
-			var maxdate = maxdate.toISOString().split('T')[0];
-			document.getElementsByName("date")[0].setAttribute('max', maxdate);
-      var e = document.getElementById('place_sid');
-       global_name = e.innerHTML;
-       e.onchange = removeDestination
-        }
+   $(document).ready(function()
+   {  
+        $('#place_sid').change(function()
+    {
+      $('#place_did').html($('#place_sid').html());
+      $("#place_did option[value='"+ $('#place_sid option:selected').val() +"']").remove();
+    });
+});
         
-       window.onload = restrictDate;
 
-       function removeDestination()
+       function validateform()
        {
-        var s= document.getElementById('place_sid');
-        var d= document.getElementById('place_did');
-        d.innerHTML = global_name;
-        d.remove(s.selectedIndex);
+
+        if ($('#place_sid option:selected').val() != "" && $('#place_did option:selected').val() != "" && $('#fare').val() != "")
+        {
+            return true;
         }
+        else
+        {
+            alert("Please Fill all the fields");
+            return false;
+        }
+       }
+   
 </script>
-<body onload="restrictData()" >
-<% if logged_in? %>
-<center><h1>Travels Booking</h1>
-<%= form_for(@route, url: {controller:"routes", action: "create"}, format: :csv, html: { method: :post}) do |f| %>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+
+<center><h1>Enter the Route to Add</h1>
+<%= form_for(@route, url: {controller:"routes", action: "create"}, format: :csv, html: {:onsubmit =>" return validateform()"}) do |f| %>
 <table>
 <tr>
  <td><label> Source : </label></td>
- <td><%= collection_select(:place, :sid, Place.all, :id, :name, :prompt => true, :style => "width: 50%"  )%></td>
+ <td><%= collection_select(:place, :sid, Place.all, :id, :name, :prompt => true, :style => "width: 50%") %></td>
 </tr>
 <tr>
  <td><label> Destination : </label></td>
  <td><%= collection_select(:place, :did, Place.all, :id, :name, :prompt => true, :style => "width: 50%" ) %></td>
 </tr>
 <tr>
- <td><label> Journey Date : </label></td>
- <td><input type="date" name="date" ></td>
+ <td><label> Start Time : </label></td>
+ <td><input type="number" min="1" max="24" value="18" name="st-h" /><input type="number" min="0" max="59" value="00" name="st-m" /></td>
 </tr>
-<tr><td rowspan="2"><%= f.submit "find", class: "btn btn-primary" %></td></tr>
+<tr>
+ <td><label> End Time : </label></td>
+ <td><input type="number" min="1" max="24" value="6" name="et-h" /><input type="number" min="0" max="59" value="00" name="et-m" /></td>
+ </tr>
+ <tr><td>Fare</td><td><input type="Text" name="fare" id="fare" /></td></tr>
+ <tr><td>Availability</td><td><input type="number" min="1" max="50" value="40" name="max" /></td></tr>
+<tr><td rowspan="2"><%= f.submit "Add Route", class: "btn btn-primary" %></td></tr>
 </table>
 <% end %>
 </center>
-
-<% else %>
-   <div class="center jumbotron"\>
-  <h1>Welcome to FreshBus Service</h1>
-  <%= link_to "Sign up now!", 'signup', class: "btn btn-lg btn-primary" %>
-  <%= link_to "Log in", 'login', class: "btn btn-lg btn-primary" %>
-</div>
-<%end %>
-</body>

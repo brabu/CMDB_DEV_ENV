@@ -1,41 +1,36 @@
 class BookedTicketsController < ApplicationController
-  def display
-
-  end
-
-  def new
-  	
-  end
+#TicketsController - Naming conv
 
   def destroy
-  	 @t = Ticket.where(:id => params["ticket_id"] )
-  	 if(current_user.id == @t.first.user_id)
-	     @limit = params["pass_count"]
-	     index = 1
-	     counter = 0
-	     while(index < @limit.to_f)
-	     	t = "pass" + index.to_s
-	     	d = params[t]
-	     	if d
-	     		pass_status=Passenger.find(d)
-	     		pass_status.status= false;
-	     		pass_status.save
-	     		counter+=1
-	     	end
-	     	index+=1
-	     end	
-	     fareadd = counter * 100
-	     faresub = @t.first.route.fare * counter
-	     @t.first.fare = @t.first.fare - faresub + fareadd
-	     @t.first.count -= counter
-	     @t.first.save
-	     render "show"
-     else
-     	render "Access"
-     end
+  	#Find user's tickets.....
+  	#pass array of cancellation from UI
+  	 @t = Ticket.find_by_id_and_user_id(params[:ticket_id],current_user.id)
+	 @arr = params[:pass]
+	 counter = 0
+	 if !@arr.nil?
+		 @arr.each do |a|   
+			 @passenger=Passenger.find_by_id_and_ticket_id(a,@t.id)
+			 if !@passenger.nil? 
+				@passenger.status= false;
+		     	@passenger.save
+		     	counter+=1
+		 	 end
+		 end
+	 end
+     cancel_charge = counter * 100
+	 fare_to_refund = (@t.route.fare * counter) - cancel_charge
+	 @t.fare = @t.fare - fare_to_refund
+	 @t.count_cancel += counter
+	 @t.save
+	 render 'index'
+  end
+  
+  def index
+
   end
 
-  def passenger_details
+  def show
   	@passenger = Passenger.new
   end
+
 end

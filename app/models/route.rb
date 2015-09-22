@@ -1,10 +1,10 @@
 class Route < ActiveRecord::Base
-	belongs_to :source, :foreign_key => "sid", :class_name => "Place", :dependent => :destroy  do
+	belongs_to :source, :foreign_key => "sid", :class_name => "Place" do
   		def name
     		select(:name)
     	end
    	end
-	belongs_to :destination, :foreign_key => "did", :class_name => "Place", :dependent => :destroy do
+	belongs_to :destination, :foreign_key => "did", :class_name => "Place" do
   	def name
     	select(:name)
     end
