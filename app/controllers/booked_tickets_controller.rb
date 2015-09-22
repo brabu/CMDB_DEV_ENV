@@ -4,29 +4,23 @@ class BookedTicketsController < ApplicationController
   def destroy
   	#Find user's tickets.....
   	#pass array of cancellation from UI
-  	 @t = Ticket.find_by_id_and_user_id(params[:ticket_id],current_user.id)
+  	 @u = User.find(current_user.id)
+  	 @t = @u.Tickets.find(params[:ticket_id])
 	 @arr = params[:pass]
-	 counter = 0
 	 if !@arr.nil?
 		 @arr.each do |a|   
-			 @passenger=Passenger.find_by_id_and_ticket_id(a,@t.id)
+			 @passenger=@t.passengers.find(a)
 			 if !@passenger.nil? 
-				@passenger.status= false;
-		     	@passenger.save
-		     	counter+=1
+				@passenger.status = false;
+				@passenger.save
 		 	 end
 		 end
 	 end
-     cancel_charge = counter * 100
-	 fare_to_refund = (@t.route.fare * counter) - cancel_charge
-	 @t.fare = @t.fare - fare_to_refund
-	 @t.count_cancel += counter
-	 @t.save
 	 render 'index'
   end
   
   def index
-
+  	@t= Ticket.order(id: :desc).where(:user_id => current_user) || []
   end
 
   def show

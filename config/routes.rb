@@ -7,20 +7,16 @@ Rails.application.routes.draw do
 
   root                 'routes#show'
   get    'contact'  => 'static_pages#contact'     
-  get    'signup'   => 'users#new'
   get    'login'    => 'sessions#new'
   post   'login'    => 'sessions#create'
   delete 'logout'   => 'sessions#destroy'
   post   'search'   => "routes#search"
-  post   'delete'   => 'booked_tickets#destroy'
-  get    'index'    => 'booked_tickets#index'
-  get    'show'     => 'booked_tickets#show'
   
-  resources :places
-  resources :routes
+  resources :places, :only => [:new, :create] 
+  resources :routes, :only => [:new, :create, :show]
   resources :users
-  resources :journey
-  resources :passengers
+  resources :passengers, :only => [:new, :create] 
+  resources :booked_tickets, :only => [:index, :show, :destroy] 
   
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
