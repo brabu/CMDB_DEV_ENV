@@ -1,29 +1,40 @@
 class PassengersController < ApplicationController
   def  new
   	@passenger = Passenger.new
-    count = "count" + params[:book]
-    render 'new', :locals => { :jdate => params[:date], :routeid => params[:book], :tcount => params[count]}
-     end
-
-  def create
-  	@journey = Journey.find_by_routeid_and_date(params[:book],params[:date])
-    if @journey.nil? 
-      @journey = Journey.create(:routeid => params[:book], :date => params[:date], :booked => 0)
-    end
-
-    @u = User.find(current_user.id)
-    @r = Route.find(params[:book])
-    @t = Ticket.new(:journey_id => @journey.id, :user_id => current_user.id, :route_id => params[:book],:DOB => Date.today, :count => params[:count])
-    index = 1 
-    while(index <= params[:count].to_i)
-    	a= index
-      t_n = "name"+a.to_s
-      t_a = "age"+a.to_s
-    	@t.passengers.new(:name => params[t_n], :age => params[t_a], :ticket_id => @t.id, :status => true)
-    	index+=1
-    end
-    @t.save
-    render 'show', :locals => { :jdate => params[:date], }
+    render 'new', :locals => { :jdate => params[:date], :routeid => params[:route], :tcount => params[params[:route]]}
   end
 
+  def create
+  	
+    @journey = Journey.find_or_create_by(routeid: params[:route] ,date: params[:date])
+    
+    @t = Ticket.new(:journey_id => @journey.id, :user_id => current_user.id, :route_id => params[:route],:DOB => Date.today, :count => params[:count])
+
+    params[:name].zip(params[:age]).each do |name, age|
+       @t.passengers.new(:name => name, :age => age)
+    end
+    
+    @t.save!
+    
+    render 'show', :locals => { :jdate => params[:date], }
+  end
+  
 end
+
+/
+    route_id = params[:route]
+    
+    params = { 
+      Ticket: { :journey_id => @journey.id, :user_id => current_user.id, :route_id => route_id,
+        :DOB => Date.today, 
+        :count => count, passengers_attributes: [
+        { name: 'avd', age: 12 },{ name: 'aavd', age: 12 }
+      ]
+      }
+    }
+    @t = Ticket.new(params[:Ticket])
+    count = params[:count]
+    name = params[:name]
+    age = params[:age]
+    /
+    

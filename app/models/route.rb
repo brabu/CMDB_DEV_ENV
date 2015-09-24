@@ -14,4 +14,7 @@ class Route < ActiveRecord::Base
      	select(:booked)
      end
     end
+    
+    validates :fare, presence: true, numericality: {only_integer: true }
+    validates :availability, presence: true, numericality: {only_integer: true, greater_than_or_equal_to: 1, less_than_or_equal_to: 50}
 end

@@ -36,34 +36,37 @@
    
 </script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-  </head>
+</head>
 <body onload="restrictData()" >
-<% if logged_in? %>
-<center><h1>Travels Booking</h1>
-<%= form_for(@route, url: {controller:"routes", action: "search"}, format: :csv, html: { :onsubmit =>" return validateform()"}) do |f| %>
-<table>
-<tr>
- <td><label> Source : </label></td>
- <td><%= collection_select(:place, :sid, Place.all, :id, :name, :prompt => true, :style => "width: 50%"  )%></td>
-</tr>
-<tr>
- <td><label> Destination : </label></td>
- <td><%= collection_select(:place, :did, Place.all, :id, :name, :prompt => true, :style => "width: 50%" ) %></td>
-</tr>
-<tr>
- <td><label> Journey Date : </label></td>
- <td><input type="date" name="date" id="date" ></td>
-</tr>
-<tr><td rowspan="2"><%= f.submit "find", class: "btn btn-primary" %></td></tr>
-</table>
-<% end %>
-</center>
+  <% if logged_in? %>
+  <center>
+    <h1>Travels Booking</h1>
+    <%= form_for(@route, url: {controller:"routes", action: "search"}, format: :csv, html: { :onsubmit =>" return validateform()"}) do |f| %>
+    <table>
+      <tr>
+        <td><label> Source : </label></td>
+        <td><%= collection_select(:place, :sid, Place.all, :id, :name, :prompt => true, :style => "width: 50%"  )%></td>
+      </tr>
+      <tr>
+        <td><label> Destination : </label></td>
+        <td><%= collection_select(:place, :did, Place.all, :id, :name, :prompt => true, :style => "width: 50%" ) %></td>
+      </tr>
+      <tr>
+        <td><label> Journey Date : </label></td>
+        <td><input type="date" name="date" id="date" ></td>
+      </tr>
+      <tr>
+        <td rowspan="2"><%= f.submit "find", class: "btn btn-primary" %></td>
+      </tr>
+    </table>
+    <% end %>
+    </center>
 
-<% else %>
-   <div class="center jumbotron"\>
-  <h1>Welcome to FreshBus Service</h1>
-  <%= link_to "Sign up now!", 'signup', class: "btn btn-lg btn-primary" %>
-  <%= link_to "Log in", 'login', class: "btn btn-lg btn-primary" %>
-</div>
-<%end %>
+  <% else %>
+     <div class="center jumbotron"\>
+      <h1>Welcome to FreshBus Service</h1>
+      <%= link_to "Sign up now!", '/users/new', class: "btn btn-lg btn-primary" %>
+      <%= link_to "Log in", '/sessions/new', class: "btn btn-lg btn-primary" %>
+     </div>
+  <%end %>
 </body>

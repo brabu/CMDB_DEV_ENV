@@ -13,35 +13,51 @@
 </head>
 
 <center>
-<h1>Search Results found</h1>
-<% if(@route.blank?) then %>
-  <h2> There was some problem in processing the selected route, The route service will be coming soon! </h2>
-<% else %>
-  <div style="width='100px'">
-  <%= form_for(@journey, url: {controller:"passengers", action: "new"}, format: :csv, html: { method: :get}) do |f| %>
-  <h4> Journey Date: <%= jdate %> </h4>
-   <table id="results_table">
-      <tr><td align="center" colspan="2">Source</td><td align="center" >Fare</td><td align="center" colspan="2">Destination</td><td align="center" >Availabilty</td><td align="center" >Ticket Count</td><td align="center">Select</td></tr>
-  <% @route.each do |r| 
+  <h1>Search Results found</h1>
+  <% if(@route.blank?) then %>
+    <h2> There was some problem in processing the selected route, The route service will be coming soon! </h2>
+  <% else %>
+    <div style="width='100px'">
+    <%= form_for(@journey, url: {controller:"passengers", action: "new"}, format: :csv, html: { method: :get}) do |f| %>
+    <h4> Journey Date: <%= jdate %> </h4>
+    <table id="results_table">
+      <tr>
+        <td align="center" colspan="2">Source</td>
+        <td align="center" >Fare</td>
+        <td align="center" colspan="2">Destination</td>
+        <td align="center" >Availabilty</td>
+        <td align="center" >Ticket Count</td>
+        <td align="center">Select</td>
+      </tr>
+    <% @route.each do |r| 
         booked= r.journeys.find_by_date(jdate).try(:booked) || 0
     %>
     <% available =  r.max - booked %>
 
-      <tr><td><img src="http://www.iconhot.com/icon/png/rrze/720/flag-red-3.png" alt="Flag" width="30px" height="30px"/></td><td><%= r.source.name %></td><td>--------->--------->---------<img src="http://media-cache-ak0.pinimg.com/736x/f2/e4/0a/f2e40a6d211201931ef8004bde693993.jpg" alt="bus image" width="100px" height="60px"/>--------->--------->---------</td><td><%= r.destination.name %></td><td><img src="http://findicons.com/files/icons/977/rrze/720/flag_green.png" alt="Flag" width="30px" height="30px"/></td>
-      <td rowspan="2" align="center" ><%= available  %></td>
-      <% if(available > 0) then 
-          if(available > 5) then %>
-            <td rowspan="2" align="center" ><INPUT name="count<%=r.id%>" TYPE="NUMBER" MIN="1" MAX="5" STEP="1" VALUE="1" /></td>
+      <tr>
+        <td><img src="http://www.iconhot.com/icon/png/rrze/720/flag-red-3.png" alt="Flag" width="30px" height="30px"/></td>
+        <td><%= r.source.name %></td>
+        <td>--------->--------->---------<img src="http://media-cache-ak0.pinimg.com/736x/f2/e4/0a/f2e40a6d211201931ef8004bde693993.jpg" alt="bus image" width="100px" height="60px"/>--------->--------->---------</td>
+        <td><%= r.destination.name %></td>
+        <td><img src="http://findicons.com/files/icons/977/rrze/720/flag_green.png" alt="Flag" width="30px" height="30px"/></td>
+        <td rowspan="2" align="center" ><%= available  %></td>
+        <% if(available > 0)  
+            if(available > 5)  %>
+              <td rowspan="2" align="center" ><INPUT name="<%=r.id%>" TYPE="NUMBER" MIN="1" MAX="5" STEP="1" VALUE="1" /></td>
+            <% else %>
+              <td rowspan="2" align="center" ><INPUT name="<%=r.id%>" TYPE="NUMBER" MIN="1" MAX="<%= available %>" STEP="1" VALUE="1" /></td>
+            <% end %>
+            <td rowspan="2" align="center" ><input type="radio" name="route"  value="<%=r.id%>" checked="checked"/></td>
           <% else %>
-            <td rowspan="2" align="center" ><INPUT name="count<%=r.id%>" TYPE="NUMBER" MIN="1" MAX="<%= available %>" STEP="1" VALUE="1" /></td>
-          <% end %>
-        
-          <td rowspan="2" align="center" ><input type="radio" name="book"  value="<%=r.id%>" checked="checked"/></td>
-      <% else %>
-          <td rowspan="2" align="center" ></td><td rowspan="2"></td></tr>
+            <td rowspan="2" align="center" ></td><td rowspan="2"></td>
       <% end %>
       </tr>
-      <tr><td></td><td><%= r.st %></td><td align="center"><%= r.fare %></td><td><%= r.et %></td><td></td>
+      <tr>
+        <td></td>
+        <td><%= r.st %></td>
+        <td align="center"><%= r.fare %></td>
+        <td><%= r.et %></td>
+        <td></td>
     <% end %>
       
       <tr><td align="center" colspan="8" > <%= f.submit "Next", class: "btn btn-primary" %></td></tr>

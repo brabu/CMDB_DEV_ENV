@@ -5,24 +5,44 @@
   text-align: center;
 }
 </style>
-<center><h1>Booking Details</h1>
+<center>
+	<h1>Booking Details</h1>
 
-<h2>Successfully booked your Ticket <%=@u.name%></h2>
-<table>
-<tr><td><img src="http://www.iconhot.com/icon/png/rrze/720/flag-red-3.png" alt="Flag" width="30px" height="30px"/></td><td><%= @r.source.name %></td><td>--------->--------->---------<img src="http://media-cache-ak0.pinimg.com/736x/f2/e4/0a/f2e40a6d211201931ef8004bde693993.jpg" alt="bus image" width="100px" height="60px"/>--------->--------->---------</td><td><%= @r.destination.name %></td><td><img src="http://findicons.com/files/icons/977/rrze/720/flag_green.png" alt="Flag" width="30px" height="30px"/></td></tr>
-<tr><td></td><td><%= @r.st %></td><td align="center"><%= jdate %></td><td><%= @r.et %></td><td></td></tr>
-</table>
-<h4>Number of Tickets = <%=@t.count %> | Total Amount = <%=@t.fare %></h4></br>
-<h4>Passenger Details</h4>
-<table id="table1" border="1">
-<tr><th>S.NO</th><th>Name</th><th>Age</th></tr>
-<% index=1 
-    while(index <= @t.count.to_f)
-   	a= index.to_s
-   	%>
-    <tr><td><%=index %></td><td><%= params["name" + a] %></td><td><%= params["age" + a] %></td></tr>
-   	<%
-   	index+=1
-   	end%>
-</table>
+	<h2>Successfully booked your Ticket <%=current_user.name%></h2>
+
+	<table>
+
+	<tr>
+		<td><img src="http://www.iconhot.com/icon/png/rrze/720/flag-red-3.png" alt="Flag" width="30px" height="30px"/></td>
+		<td><%= @t.journey.route.source.name %></td>
+		<td>--------->--------->---------<img src="http://media-cache-ak0.pinimg.com/736x/f2/e4/0a/f2e40a6d211201931ef8004bde693993.jpg" alt="bus image" width="100px" height="60px"/>--------->--------->---------</td>
+		<td><%= @t.journey.route.destination.name %></td>
+		<td><img src="http://findicons.com/files/icons/977/rrze/720/flag_green.png" alt="Flag" width="30px" height="30px"/></td>
+	</tr>
+	<tr>
+		<td></td>
+		<td><%= @t.journey.route.st %></td>
+		<td align="center"><%= jdate %></td>
+		<td><%= @t.journey.route.et %></td>
+		<td></td>
+	</tr>
+	</table>
+	<h4>Number of Tickets = <%=@t.count %> | Total Amount = <%=@t.fare %></h4></br>
+	<h4>Passenger Details</h4>
+	<table id="table1" border="1">
+	<tr>
+		<th>S.NO</th>
+		<th>Name</th>
+		<th>Age</th>
+	</tr>
+	<%  sno=1
+    params[:name].zip(params[:age]).each do |name, age| %>
+    <tr>
+    	<td><%=sno %></td>
+    	<td><%= name %></td>
+    	<td><%= age %></td>
+    </tr>
+   	<% sno+=1 
+   		end %>
+	</table>
 </center>

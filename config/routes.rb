@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
 
 
-  get  'ticket_details' => 'booked_tickets#passenger_details'
+ 
 
   get 'sessions/new'
 
@@ -10,13 +10,15 @@ Rails.application.routes.draw do
   get    'login'    => 'sessions#new'
   post   'login'    => 'sessions#create'
   delete 'logout'   => 'sessions#destroy'
-  post   'search'   => "routes#search"
+  post   'search'   => 'routes#search'
+  
   
   resources :places, :only => [:new, :create] 
   resources :routes, :only => [:new, :create, :show]
   resources :users
   resources :passengers, :only => [:new, :create] 
-  resources :booked_tickets, :only => [:index, :show, :destroy] 
+  resources :ticket, :only => [:index, :show, :destroy] 
+
   
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

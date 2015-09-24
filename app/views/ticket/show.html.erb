@@ -1,0 +1,52 @@
+
+<style>
+
+#table1 th, #table1 td {
+  padding:10px !important;
+}
+</style>
+<center><h3>Passenger Details</h3>
+<%= form_for(@passenger, url: {controller:"ticket", action: "destroy"}, format: :csv, html: { method: :delete}) do |f| 
+	%>
+		<table id="table1">
+		<tr>
+			<th>S.No</th>
+			<th>Name</th>
+			<th>Age</th>
+			<th>status</th>
+			<th>Fare</th>
+			<th>Select</th>
+		</tr>
+		<% sno=1
+		cancel_link = 0
+		@passengers.each do |p|  
+		 if p.status 
+			cancel_link = 1 
+		%>
+			<tr>
+				<td><%= sno %></td>
+				<td><%= p.name %> </td>
+				<td><%= p.age %></td>
+				<td>Confirm</td>
+				<td><%= p.ticket.journey.route.fare %></td>
+				<td><input type="checkbox" name="pass[]" value="<%=p.id%>"></td>
+			</tr>
+		<% else %>
+			<tr>
+				<td><%= sno %></td>
+				<td><%= p.name %> </td>
+				<td><%= p.age %></td>
+				<td>Cancelled</td>
+				<td>100</td>
+				<td><input type="checkbox" name="pass[]" value="<%=p.id%>" disabled></td>
+			</tr>
+		<% end %>
+		<% sno+=1 %>
+	<% end %>
+	<input type="hidden" name="ticket_id" value="<%= params[:id] %>" />
+	<% if cancel_link == 1 then %>
+		<tr><td colspan="4"><%= f.submit "Cancel Ticket", class: "btn btn-primary" %></td></tr>
+	<% end %>
+	</table>
+<% end %>
+</center>

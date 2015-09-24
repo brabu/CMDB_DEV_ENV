@@ -3,13 +3,10 @@
 
 
 <%= form_for(@place) do |f| %>
-<label>Place 1</label>
-<input type="text" name="place1" />
-</br>
 
-<label>Place 2</label>
-<input type="text" name="place2" />
-</br>
+      <%= f.label :name %>
+      <%= f.text_field :name, class: 'form-control' %>
+
  <%= f.submit "Add Places", class: "btn btn-primary" %>
  <% end %>
 

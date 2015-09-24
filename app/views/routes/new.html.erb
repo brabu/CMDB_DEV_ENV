@@ -30,25 +30,33 @@
 <center><h1>Enter the Route to Add</h1>
 <%= form_for(@route, url: {controller:"routes", action: "create"}, format: :csv, html: {:onsubmit =>" return validateform()"}) do |f| %>
 <table>
-<tr>
- <td><label> Source : </label></td>
- <td><%= collection_select(:place, :sid, Place.all, :id, :name, :prompt => true, :style => "width: 50%") %></td>
-</tr>
-<tr>
- <td><label> Destination : </label></td>
- <td><%= collection_select(:place, :did, Place.all, :id, :name, :prompt => true, :style => "width: 50%" ) %></td>
-</tr>
-<tr>
- <td><label> Start Time : </label></td>
- <td><input type="number" min="1" max="24" value="18" name="st-h" /><input type="number" min="0" max="59" value="00" name="st-m" /></td>
-</tr>
-<tr>
- <td><label> End Time : </label></td>
- <td><input type="number" min="1" max="24" value="6" name="et-h" /><input type="number" min="0" max="59" value="00" name="et-m" /></td>
- </tr>
- <tr><td>Fare</td><td><input type="Text" name="fare" id="fare" /></td></tr>
- <tr><td>Availability</td><td><input type="number" min="1" max="50" value="40" name="max" /></td></tr>
-<tr><td rowspan="2"><%= f.submit "Add Route", class: "btn btn-primary" %></td></tr>
+  <tr>
+    <td><label> Source : </label></td>
+    <td><%= collection_select(:place, :sid, Place.all, :id, :name, :prompt => true, :style => "width: 50%") %></td>
+  </tr>
+  <tr>
+    <td><label> Destination : </label></td>
+    <td><%= collection_select(:place, :did, Place.all, :id, :name, :prompt => true, :style => "width: 50%" ) %></td>
+  </tr>
+  <tr>
+    <td><label> Start Time : </label></td>
+    <td><input type="number" min="1" max="24" value="18" name="st-h" /><input type="number" min="0" max="59" value="00" name="st-m" /></td>
+  </tr>
+  <tr>
+    <td><label> End Time : </label></td>
+    <td><input type="number" min="1" max="24" value="6" name="et-h" /><input type="number" min="0" max="59" value="00" name="et-m" /></td>
+  </tr>
+  <tr>
+    <td>Fare</td>
+    <td><input type="Text" name="fare" id="fare" /></td>
+  </tr>
+  <tr>
+    <td>Availability</td>
+    <td><input type="number" min="1" max="50" value="40" name="max" /></td>
+  </tr>
+  <tr>
+    <td rowspan="2"><%= f.submit "Add Route", class: "btn btn-primary" %></td>
+  </tr>
 </table>
 <% end %>
 </center>
