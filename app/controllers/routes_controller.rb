@@ -10,27 +10,16 @@ class RoutesController < ApplicationController
   end
 
   def create
-    @route = Route.new
-    sth = params["st-h"].to_s
-    if sth.length < 2
-      sth = "0" + sth
+    st = Time.new(1,1,1,params["st-h"],params["st-m"],0).to_s.split(' ')[1]
+    et = Time.new(1,1,1,params["et-h"],params["et-m"],0).to_s.split(' ')[1]
+    
+    route = Route.new(:sid => params[:place][:sid], :did => params[:place][:did] ,:st => st ,:et => et ,:fare => params[:fare] ,:max => params[:max])
+    if route.save
+      flash[:notice] = "Route successfully created"
+    else
+      flash[:notice] = "Route creation failed"
     end
-    eth =  params["et-h"].to_s
-    if eth.length < 2
-      eth = "0" + eth
-    end
-    etm =  params["et-m"].to_s
-    if etm.length < 2
-      etm = "0" + etm
-    end
-    stm =  params["st-m"].to_s
-    if stm.length < 2
-      stm = "0" + stm
-    end
-    st = sth + ":" + stm + ":00"
-    et = eth + ":" + etm + ":00"
-    r = Route.create(:sid => params[:place][:sid], :did => params[:place][:did] ,:st => st ,:et => et ,:fare => params[:fare] ,:max => params[:max])
-    redirect_to 'success'
+    redirect_to new_route_path
   end
 
   def show
