@@ -29,18 +29,18 @@
 	 confirm_count = t.count - t.count_cancel %>
 	   <tr>
 	   	<td><%= sno %></td>
-		<td><a href="/ticket/<%= t.id %>" target="_blank" >FBS#<%= t.id %></a></td>
-		<td><%= t.DOB %></td>
+		<td><a href="/tickets/<%= t.id %>" target="_blank" >FBS#<%= t.id %></a></td>
+		<td><%= t.created_at.to_s.split(' ')[0] %></td>
 		<td><%= t.journey.date %></td>
 		<td><%= t.journey.route.source.name %></td>
 		<td><%= t.journey.route.destination.name %></td>
-		<td><%= t.journey.route.st %></td>
-		<td><%= t.journey.route.et %></td>
+		<td><%= t.journey.route.st.to_s.split(' ')[1] %></td>
+		<td><%= t.journey.route.et.to_s.split(' ')[1] %></td>
 		<td><%= confirm_count %>/<%= t.count %></td>
 		<td>
 			<% if cancel_charge != 0 then %><abbr title="Cancellation Charge:<%= cancel_charge %>"><%= t.fare %></abbr><% else %> <%= t.fare %> <%end %>
 		</td>
-	</tr>
+	   </tr>
 
 	<% sno+=1 %>
 	<% end %>

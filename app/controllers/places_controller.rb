@@ -14,6 +14,10 @@ class PlacesController < ApplicationController
     redirect_to new_place_path
    end
 
+   def index
+    @place = Place.all
+   end
+
   private
 
   def place_params

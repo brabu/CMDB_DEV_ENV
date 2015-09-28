@@ -11,23 +11,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150921055323) do
-
-  create_table "Tickets", force: :cascade do |t|
-    t.integer  "journey_id"
-    t.integer  "user_id"
-    t.integer  "route_id"
-    t.string   "DOB"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
-    t.integer  "count"
-    t.integer  "fare"
-    t.integer  "count_cancel"
-  end
+ActiveRecord::Schema.define(version: 20150925120909) do
 
   create_table "journeys", force: :cascade do |t|
     t.integer  "routeid"
-    t.string   "date"
+    t.date     "date"
     t.integer  "booked"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -51,12 +39,22 @@ ActiveRecord::Schema.define(version: 20150921055323) do
   create_table "routes", force: :cascade do |t|
     t.integer  "sid"
     t.integer  "did"
-    t.string   "st"
-    t.string   "et"
+    t.time     "st"
+    t.time     "et"
     t.integer  "fare"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer  "max"
+  end
+
+  create_table "tickets", force: :cascade do |t|
+    t.integer  "journey_id"
+    t.integer  "user_id"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+    t.integer  "count"
+    t.integer  "fare"
+    t.integer  "count_cancel"
   end
 
   create_table "users", force: :cascade do |t|

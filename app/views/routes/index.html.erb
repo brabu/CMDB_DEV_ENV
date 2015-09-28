@@ -1,0 +1,31 @@
+<style>
+#disp_table th, td {
+  padding:10px !important;
+  align: center;
+}
+</style>
+<h3>
+	The List of Routes added are : 
+</h3>
+<br/>
+<table border='1' id='disp_table'>
+	<tr>
+		<th>Source</th>
+		<th>Destination</th>
+		<th>Start Time</th>
+		<th>End Time</th>
+		<th>Fare</th>
+		<th>Availability</th>
+	</tr>
+
+	<% @routes.each do |r| %>
+		<tr>
+			<td><%= r.source.name %></td>
+			<td><%= r.destination.name %></td>
+			<td><%= r.st.to_s.split(' ')[1] %></td>
+			<td><%= r.et.to_s.split(' ')[1] %></td>
+			<td><%= r.fare %></td>
+			<td><%= r.max %></td>
+		</tr>
+	<%end%>
+</table>

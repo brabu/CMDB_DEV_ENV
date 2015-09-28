@@ -11,13 +11,15 @@ Rails.application.routes.draw do
   post   'login'    => 'sessions#create'
   delete 'logout'   => 'sessions#destroy'
   post   'search'   => 'routes#search'
+  post   'cancel'   => 'tickets#cancel_passenger'
+  post   'passenger_list' => 'passengers#new'
   
-  
-  resources :places, :only => [:new, :create] 
-  resources :routes, :only => [:new, :create, :show]
+
+  resources :places, :only => [:new, :create, :index] 
+  resources :routes, :only => [:new, :create, :show, :index]
   resources :users
-  resources :passengers, :only => [:new, :create] 
-  resources :ticket, :only => [:index, :show, :destroy] 
+  resources :passengers, :only => [:create] 
+  resources :tickets, :only => [:index, :show] 
 
   
   # The priority is based upon order of creation: first created -> highest priority.

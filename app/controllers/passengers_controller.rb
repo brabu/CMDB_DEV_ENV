@@ -1,40 +1,36 @@
 class PassengersController < ApplicationController
   def  new
-  	@passenger = Passenger.new
-    render 'new', :locals => { :jdate => params[:date], :routeid => params[:route], :tcount => params[params[:route]]}
+  	@ticket = Ticket.new
+    count = params[:ticket][:selected].to_i
+    @passengers = []
+    count.times { |e| @passengers << @ticket.passengers.new }
+    render 'new', :locals => { :ticket => params[:ticket]}
   end
 
   def create
   	
-    @journey = Journey.find_or_create_by(routeid: params[:route] ,date: params[:date])
-    
-    @t = Ticket.new(:journey_id => @journey.id, :user_id => current_user.id, :route_id => params[:route],:DOB => Date.today, :count => params[:count])
+    @journey = Journey.find_or_create_by(routeid: params[:ticket][:route_id] ,date: params[:ticket][:date]) 
+
+    @t = current_user.tickets.new(ticket_params)
+    @t.journey_id = @journey.id
+    @t.save!
+
+    flash[:notice] = "Ticket Booked Successfully"
+    redirect_to tickets_path
+  end
+  
+  private 
+  
+  def ticket_params
+    params.require(:ticket).permit(:count,:journey_id, passengers_attributes: [:name, :age] )
+  end
+end
+
+
+    /  
+    @t = Ticket.new(:journey_id => @journey.id, :user_id => current_user.id, :count => params[:ticket][:count])
 
     params[:name].zip(params[:age]).each do |name, age|
        @t.passengers.new(:name => name, :age => age)
     end
-    
-    @t.save!
-    
-    render 'show', :locals => { :jdate => params[:date], }
-  end
-  
-end
-
-/
-    route_id = params[:route]
-    
-    params = { 
-      Ticket: { :journey_id => @journey.id, :user_id => current_user.id, :route_id => route_id,
-        :DOB => Date.today, 
-        :count => count, passengers_attributes: [
-        { name: 'avd', age: 12 },{ name: 'aavd', age: 12 }
-      ]
-      }
-    }
-    @t = Ticket.new(params[:Ticket])
-    count = params[:count]
-    name = params[:name]
-    age = params[:age]
-    /
-    
+   /
