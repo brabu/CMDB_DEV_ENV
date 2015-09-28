@@ -5,7 +5,9 @@ $(document).ready(function(){
   });
 });
 
-function restrictDate() {
+
+
+window.onload = function () {
   var mindate = new Date().toISOString().split('T')[0];
   document.getElementById("date").setAttribute('min', mindate);
   var maxdate = new Date();
@@ -14,8 +16,6 @@ function restrictDate() {
   document.getElementById("date").setAttribute('max', maxdate);
   var e = document.getElementById('route_sid');
 }
-
-window.onload = restrictDate;
 
 function validateform() {
 
