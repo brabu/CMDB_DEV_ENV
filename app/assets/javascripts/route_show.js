@@ -19,7 +19,7 @@ window.onload = restrictDate;
 
 function validateform() {
 
-  if ($('#place_sid option:selected').val() != "" && $('#place_did option:selected').val() != "" && $('#date').val() != ""){
+  if ($('#route_sid option:selected').val() != "" && $('#route_did option:selected').val() != "" && $('#date').val() != ""){
     return true;
   }
   else
