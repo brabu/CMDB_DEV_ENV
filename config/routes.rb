@@ -1,26 +1,33 @@
+class SubdomainConstraint
+  def self.matches?(request)
+    subdomains = %w{ www admin}
+    request.subdomain.present? && !subdomains.include?(request.subdomain)
+  end
+end
+
 Rails.application.routes.draw do
 
+  constraints SubdomainConstraint do
+    get    'sessions/new'
+    
+    root                 'routes#show'
+    get    'contact'        => 'static_pages#contact'     
+    get    'login'          => 'sessions#new'
+    post   'login'          => 'sessions#create'
+    delete 'logout'         => 'sessions#destroy'
+    post   'search'         => 'routes#search'
+    post   'cancel'         => 'tickets#cancel_passenger'
+    post   'passenger_list' => 'passengers#new'
+    
 
- 
+    resources :places, :only => [:new, :create, :index] 
+    resources :routes, :only => [:new, :create, :show, :index]
+    resources :users
+    resources :passengers, :only => [:create] 
+    resources :tickets, :only => [:index, :show] 
+  end
 
-  get 'sessions/new'
-
-  root                 'routes#show'
-  get    'contact'  => 'static_pages#contact'     
-  get    'login'    => 'sessions#new'
-  post   'login'    => 'sessions#create'
-  delete 'logout'   => 'sessions#destroy'
-  post   'search'   => 'routes#search'
-  post   'cancel'   => 'tickets#cancel_passenger'
-  post   'passenger_list' => 'passengers#new'
-  
-
-  resources :places, :only => [:new, :create, :index] 
-  resources :routes, :only => [:new, :create, :show, :index]
-  resources :users
-  resources :passengers, :only => [:create] 
-  resources :tickets, :only => [:index, :show] 
-
+  resources :accounts
   
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

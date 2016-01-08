@@ -6,6 +6,7 @@ class CreatePassengers < ActiveRecord::Migration
       t.integer :age
 
       t.timestamps null: false
+      t.index [:ticket_id]
     end
   end
 end

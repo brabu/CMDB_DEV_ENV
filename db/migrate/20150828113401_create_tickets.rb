@@ -3,10 +3,8 @@ class CreateTickets < ActiveRecord::Migration
     create_table :tickets do |t|
       t.integer :journey_id
       t.integer :user_id
-      t.integer :route_id
-      t.string :DOB
-
       t.timestamps null: false
+      t.index [:user_id]
     end
   end
 end

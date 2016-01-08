@@ -3,8 +3,8 @@ class CreateRoutes < ActiveRecord::Migration
     create_table :routes do |t|
       t.integer :sid
       t.integer :did
-      t.string :st
-      t.string :et
+      t.time :st
+      t.time :et
       t.integer :fare
 
       t.timestamps null: false
