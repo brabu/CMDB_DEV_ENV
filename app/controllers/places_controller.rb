@@ -15,7 +15,7 @@ class PlacesController < ApplicationController
    end
 
    def index
-    @place = Place.all
+    @places = Place.all
    end
 
   private
